@@ -1,11 +1,11 @@
 name: GraalVM Native Image Build
 
-on: push
+#on: push
 
-#on:
-#  push:
-#    tags:
-#      - "v*.*.*"
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -15,9 +15,11 @@ jobs:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: graalvm/setup-graalvm@v1
+      - name: Setup
+        uses: graalvm/setup-graalvm@v1
         with:
           version: '21.0.0'
           java-version: '8'
@@ -25,20 +27,14 @@ jobs:
           github-token: ${{ github.token }}
           check-for-updates: false
 
-      - name: show info
-        run: |
-          java -version
-          native-image --version
-          mvn --version
-
-      - name: maven build
+      - name: Build
         run: |
           mvn clean package -DskipTests
-          tree .
+          mv mybatis-plus-generator/target/mybatis-plus-generator mybatis-plus-generator/target/mybatis-plus-generator-${{ matrix.os }} 
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            */target/*
+            */target/*-${{ matrix.os }}
             !*/target/*.jar
