@@ -23,6 +23,7 @@ jobs:
           java-version: '8'
           components: 'native-image'
           github-token: ${{ github.token }}
+          check-for-updates: false
 
       - name: show info
         run: |
