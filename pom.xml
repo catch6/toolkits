@@ -16,6 +16,23 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hutool-all.version>5.8.7</hutool-all.version>
+        <consoleui.version>0.0.13</consoleui.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codeshelf.consoleui</groupId>
+                <artifactId>consoleui</artifactId>
+                <version>${consoleui.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
